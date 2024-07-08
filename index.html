@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignment</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -17,10 +31,8 @@
                     <li><a href="classes.html">Classes</a></li>
                     <li><a href="#schedule">Schedule</a></li>
                     <li><a href="#contact">Contact</a></li>
-                    
                 </ul>
                 <button class="signup-btn">Signup</button>
-                
             </nav>
         </div>
     </header>
@@ -32,6 +44,42 @@
         </div>
     </section>
 
-    
+    <div id="popupForm" class="popup">
+        <h2>Membership Form</h2>
+        <form id="membershipForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name"  required><br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email"  required><br><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const memberBtn = document.querySelector('.member-btn');
+            const popupForm = document.getElementById('popupForm');
+
+            memberBtn.addEventListener('click', function() {
+                popupForm.style.display = 'block';
+            });
+
+            const membershipForm = document.getElementById('membershipForm');
+            membershipForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const nameInput = document.getElementById('name');
+                const name = nameInput.value.trim();
+                
+                if (/\d/.test(name)) {
+                    alert('Name cannot contain numbers.');
+                    nameInput.focus();
+                    return;
+                }
+                alert(`Welcome, ${name}! Your membership has been processed.`);
+                membershipForm.reset();
+                popupForm.style.display = 'none';
+            });
+        });
+    </script>
 </body>
 </html>
